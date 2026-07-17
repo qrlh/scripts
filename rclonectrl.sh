@@ -68,19 +68,16 @@ safety_check() {
     # To catch common errors
     if test "$EUID" -eq 0; then
         echo "Safety check failed! Do not run this script as root! Exiting..."
-        sleep 3
         exit 1
     fi
 
     if ! test "${mntdir#"/"}" != "$mntdir"; then
         echo "Safety check failed! mntdir must be an absolute path. Exiting..."
-        sleep 3
         exit 1
     fi
 
     if printf '%s\n' "${remotemntdir[@]}" | grep -q '//'; then
         echo "Safety check failed! Double slashes in directory! Exiting..."
-        sleep 3
         exit 1
     fi
 }
@@ -92,16 +89,10 @@ usage() {
 main() {
     safety_check
     case "$1" in
-    -m)
+    -m | --mount)
         mount_remotes
         ;;
-    -u)
-        unmount_remotes
-        ;;
-    --mount)
-        mount_remotes
-        ;;
-    --unmount)
+    -u | --unmount)
         unmount_remotes
         ;;
     *)
