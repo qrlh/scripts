@@ -1,0 +1,11 @@
+[Unit]
+Description=Watches the journal for GPU coredumps and backs them up.
+
+[Service]
+ExecStart=<replace with path to watcher.sh>
+ExecStartPre=/bin/mkdir -p /var/log/amdgpu-coredumps
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
